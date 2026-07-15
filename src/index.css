@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-display: "Baloo 2", ui-rounded, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-tagline: "Instrument Serif", ui-serif, Georgia, serif;
+
+  /* Brand palette */
+  --color-kala-green: #0f3d2e;
+  --color-kala-green-light: #1b5a44;
+  --color-kala-green-dark: #0a2a20;
+  --color-kala-lime: #c6f24d;
+  --color-kala-lime-dark: #a3d62c;
+  --color-kala-mango: #ff8a3d;
+  --color-kala-mango-dark: #e8641a;
+  --color-kala-chili: #6b1220;
+  --color-kala-chili-light: #8c1c2b;
+  --color-kala-cream: #fbf3e4;
+  --color-kala-cream-dark: #f1e4cd;
+  --color-kala-purple: #7b5ce0;
+  --color-kala-purple-dark: #5f43bd;
+  --color-kala-mint: #8fe3b0;
+  --color-kala-pink: #ffb6e1;
+  --color-kala-ink: #14231b;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 38s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+}
+
+@layer base {
+  * {
+    @apply border-kala-ink/10;
+  }
+
+  /* Scroll smoothing is fully delegated to Lenis (see src/lib/smoothScroll.ts)
+     so we deliberately avoid CSS `scroll-behavior: smooth` here — running both
+     at once causes the two scroll animations to fight each other. */
+
+
+  body {
+    @apply bg-kala-cream text-kala-ink font-body antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-kala-lime);
+    color: var(--color-kala-ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-kala-cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-kala-green);
+    border-radius: 999px;
+    border: 2px solid var(--color-kala-cream);
+  }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 1.5px currentColor;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--tw-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(var(--tw-rotate, 0deg));
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Lenis smooth scroll helpers */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Swiper pagination, restyled to match the brand palette */
+.kala-swiper {
+  --swiper-pagination-color: var(--color-kala-green);
+  --swiper-pagination-bullet-inactive-color: var(--color-kala-ink);
+  --swiper-pagination-bullet-inactive-opacity: 0.2;
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-horizontal-gap: 5px;
+}
+
+
+@layer components {
+  .admin-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-kala-green px-4 py-2.5 text-sm font-bold text-kala-cream transition hover:bg-kala-green-light;
+  }
+  .admin-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-kala-ink/10 bg-white px-4 py-2.5 text-sm font-bold text-kala-ink transition hover:border-kala-green hover:text-kala-green;
+  }
+  .admin-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-kala-chili/10 px-4 py-2.5 text-sm font-bold text-kala-chili transition hover:bg-kala-chili hover:text-white;
+  }
+  .admin-icon-danger {
+    @apply flex h-9 w-9 items-center justify-center rounded-xl bg-kala-chili/10 text-kala-chili transition hover:bg-kala-chili hover:text-white;
+  }
+}
